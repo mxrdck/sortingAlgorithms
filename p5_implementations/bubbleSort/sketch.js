@@ -5,7 +5,7 @@ const height = 500;
 const rect_width = 10;
 let n = 0;
 let k = 0;
-let max_k = n;
+let max_k;
 const fr = 60;
 let movesP;
 let swapped = true;
@@ -15,6 +15,7 @@ function setup() {
     frameRate(fr);
 
     n = int(width / rect_width);
+    max_k = n;
     for (let i = 0; i < n; i++) {
         arr[i] = random(100, height);
     }
@@ -30,7 +31,7 @@ function draw() {
     //reset drawing each loop
     background(255);
     fill(220);
-    swapped=false;
+    
     //pseudocode
     /* 
     Iterate through array and compare current element to next element
@@ -61,13 +62,17 @@ function draw() {
     }
 
     //if there are more elements to compare, move to the right (stop at len-2)
-    if(k<arr.length-1)
+    if(k<max_k)
         k++;
-    if(swapped=false && k==arr.length-1){
+
+    console.log(swapped,k);    
+    if(swapped==false && k==max_k){
         noLoop();
     }
-    else if(swapped=true && k==arr.length-1){
+    else if(swapped==true && k==max_k){
         k=0;
+        swapped=false;
+        max_k--;
     }
 
     //array is sorted if we are at end of the array and didn't swap any element
