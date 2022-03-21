@@ -1,23 +1,26 @@
 let arr = [];
-const width = 800;
-const height = 500;
+let width;
+let height;
 
 const rect_width = 10;
 let n = 0;
 let k = 0;
 let max_k;
-const fr = 60;
+const fr = 500;
 let movesP;
 let swapped = true;
+let sorted;
 
 function setup() {
+    width=1200;
+    height=500;
     createCanvas(width, height);
     frameRate(fr);
-
+    sorted = false;
     n = int(width / rect_width);
-    max_k = n;
+    max_k = n-1;
     for (let i = 0; i < n; i++) {
-        arr[i] = random(100, height);
+        arr[i] = int(random(100, height));
     }
 
     background(255);
@@ -42,9 +45,9 @@ function draw() {
 
     //draw array
     for (let i = 0; i < n; i++) {
-        if(i==k){
+        if(i==k && sorted==false){
             fill("green");
-        }else if(i==k+1){
+        }else if(i==k+1 && sorted==false){
             fill("red");
         }else{
             fill(220);
@@ -58,21 +61,22 @@ function draw() {
     if (curr > next) {
         arr = swap(arr, k, k + 1);
         swapped = true;
-        console.log("swapped: "+swapped);
     }
 
     //if there are more elements to compare, move to the right (stop at len-2)
     if(k<max_k)
         k++;
 
-    console.log(swapped,k);    
+        
     if(swapped==false && k==max_k){
         noLoop();
+        sorted = true;
+        redraw();
     }
     else if(swapped==true && k==max_k){
+        max_k--;
         k=0;
         swapped=false;
-        max_k--;
     }
 
     //array is sorted if we are at end of the array and didn't swap any element
