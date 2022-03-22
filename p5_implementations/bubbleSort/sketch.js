@@ -63,6 +63,7 @@ function draw() {
         swapped = true;
     }
 
+    movesP.html("Moves: "+frameCount);
     //if there are more elements to compare, move to the right (stop at len-2)
     if(k<max_k)
         k++;
